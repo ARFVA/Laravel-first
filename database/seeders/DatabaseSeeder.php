@@ -22,10 +22,8 @@ class DatabaseSeeder extends Seeder
         Classroom::factory(5)
         ->hasStudents(5)
         ->Create();
-        Subject::factory(5)
-        ->hasTeachers(5)
-        ->create();
-
+        Subject::factory(5)->hasTeachers(1)->create();
+        
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
