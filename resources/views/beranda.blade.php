@@ -21,3 +21,6 @@
 </x-layout>
 </body>
 </html>
+<!-- php artisan make:model -mfs
+php artisan migrate:fresh --seed
+php artisan migrate -->

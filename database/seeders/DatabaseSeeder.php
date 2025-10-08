@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Classroom;
 use App\Models\Guardian;
 use App\Models\Student;
+use App\Models\Subject;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use GuzzleHttp\Promise\Create;
@@ -21,6 +22,10 @@ class DatabaseSeeder extends Seeder
         Classroom::factory(5)
         ->hasStudents(5)
         ->Create();
+        Subject::factory(5)
+        ->hasTeachers(5)
+        ->create();
+
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
