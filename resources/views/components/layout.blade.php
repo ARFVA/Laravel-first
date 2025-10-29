@@ -1,4 +1,4 @@
-    <!doctype html>
+<!doctype html>
 <html class="h-full bg-gray-100">
   <head>
     <meta charset="utf-8" />

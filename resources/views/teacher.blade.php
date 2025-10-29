@@ -4,21 +4,23 @@
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
             <tr>
-                <th>No</th>
-                <th>Name</th>
-                <th>Subject Name</th>
-                <th>Phone</th>
-                <th>Address</th>
-            </tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>Email</th>
+            <th>Mata Pelajaran</th>
+            <th>Telepon</th>
+            <th>Alamat</th>
+          </tr>
         </thead>
         <tbody>
-            @foreach($teachers as $teacher)
+          @foreach($teachers as $teacher)
             <tr>
-                <td>{{ $loop->iteration}}</td>
-                <td>{{ $teacher['name'] }}</td>
-                <td>{{ $teacher -> subject ['name'] }}</td>
-                <td>{{ $teacher['phone'] }}</td>
-                <td>{{ $teacher['address'] }}</td>
+              <td>{{ $loop->iteration }}</td>
+              <td>{{ $teacher->name }}</td>
+              <td>{{ $teacher->email }}</td>
+              <td>{{ $teacher->subject->name ?? '-' }}</td>
+              <td>{{ $teacher->phone }}</td>
+              <td>{{ $teacher->address }}</td>
             </tr>
             @endforeach
         </tbody>

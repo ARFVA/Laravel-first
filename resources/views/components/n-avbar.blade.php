@@ -9,7 +9,6 @@
           </div>
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
-              <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
               <x-nav-link href="/home" :active="request()->is('home')">Home</x-nav-link>
               <x-nav-link href="/profil" :active="request()->is('profil')">Profile</x-nav-link>
               <x-nav-link href="/kontak" :active="request()->is('kontak')">Kontak</x-nav-link>
@@ -18,6 +17,7 @@
               <x-nav-link href="/classroom" :active="request()->is('classroom')">Classroom</x-nav-link>
               <x-nav-link href="/teacher" :active="request()->is('teacher')">Teacher</x-nav-link>
               <x-nav-link href="/subject" :active="request()->is('subject')">Subject</x-nav-link>
+              <x-nav-link href="/admin/dashboard" :active="request()->is('admin/dashboard')">Dashboard</x-nav-link>
             </div>
           </div>
         </div>
