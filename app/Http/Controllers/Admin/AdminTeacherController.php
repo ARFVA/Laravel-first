@@ -4,23 +4,26 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Teacher;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
-class TeacherController extends Controller
+class AdminTeacherController extends Controller
 {
     public function index()
     {
         $teachers = Teacher::with('subject')->get();
+        $subjects = Subject::all();
 
-        return view('admin-teacher', [
+        return view('admin.teacher.admin-teacher', [
             'title' => 'Data Guru',
-            'teachers' => $teachers
+            'teachers' => $teachers,
+            'subjects' => $subjects,
         ]);
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:100',
             'email' => 'required|email|max:100|unique:teachers,email',
             'subject_id' => 'required|exists:subjects,id',
@@ -28,14 +31,16 @@ class TeacherController extends Controller
             'address' => 'required|string|max:255',
         ]);
 
-        Teacher::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'subject_id' => $request->subject_id,
-            'phone' => $request->phone,
-            'address' => $request->address,
-        ]);
+        Teacher::create($validated);
 
-        return redirect()->route('admin.teachers.index')->with('success', 'Data guru berhasil ditambahkan!');
+        return redirect()->back()->with('success', 'Data guru berhasil ditambahkan!');
+    }
+
+    public function destroy(string $id)
+    {
+        $teacher = Teacher::findOrFail($id);
+        $teacher->delete();
+
+        return redirect()->back()->with('success', 'Data berhasil dihapus!');
     }
 }

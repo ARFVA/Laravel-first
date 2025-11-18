@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Teacher extends Model
 {
-    /** @use HasFactory<\Database\Factories\TeacherFactory> */
     use HasFactory;
+
+    // Eager load relasi tunggal 'subject'
+    protected $with = ['subject'];
+
     protected $fillable = [
         'name',
         'subject_id',
@@ -16,8 +19,9 @@ class Teacher extends Model
         'email',
         'address',
     ];
+
     public function subject()
     {
-        return $this->belongsTo(Subject::class);
+        return $this->belongsTo(Subject::class, 'subject_id');
     }
 }
