@@ -40,11 +40,8 @@ class AdminClassroomController extends Controller
         return redirect()->back()->with('success', 'Data berhasil diupdate!');
     }
 
-    public function destroy(string $id)
+    public function destroy()
     {
-        $classroom = Classroom::findOrFail($id);
-        $classroom->delete();
 
-        return redirect()->back()->with('success', 'Classroom berhasil dihapus!');
     }
 }

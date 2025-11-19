@@ -43,12 +43,8 @@ class AdminSubjectController extends Controller
         return redirect()->back()->with('success', 'Subject berhasil diupdate!');
     }
 
-    public function destroy(string $id)
+    public function destroy()
     {
-        $subject = Subject::with('teachers')->findOrFail($id);
         
-        $subject->delete();
-
-        return redirect()->back()->with('success', 'Subject berhasil dihapus!');
     }
 }

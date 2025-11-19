@@ -38,7 +38,7 @@
 
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th class="px-4 py-3">#</th>
+                            <th class="px-4 py-3">No</th>
                             <th class="px-4 py-3">Name</th>
                             <th class="px-4 py-3">Classroom</th>
                             <th class="px-4 py-3">Email</th>

@@ -32,7 +32,7 @@
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
-                                <th class="px-4 py-3">#</th>
+                                <th class="px-4 py-3">No</th>
                                 <th class="px-4 py-3">Name</th>
                                 <th class="px-4 py-3">Students</th>
                                 <th class="px-4 py-3 text-right">Action</th>
@@ -81,18 +81,6 @@
                                                 </li>
 
                                             </ul>
-
-                                            <div class="py-1">
-                                                <button
-                                                    @click.stop="
-                                                        deleteUrl = '{{ route('classroom.destroy', $classroom->id) }}';
-                                                        openDeleteModal = true;
-                                                    "
-                                                    class="w-full text-left block py-2 px-4 text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600"
-                                                >
-                                                    Delete
-                                                </button>
-                                            </div>
                                         </div>
                                     </td>
 
@@ -102,8 +90,6 @@
 
                     </table>
                 </div>
-
-                @include('admin.classroom.delete')
 
                 @include('admin.classroom.edit')
 
