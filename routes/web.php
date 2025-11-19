@@ -49,8 +49,10 @@ Route::delete('/admin/classrooms/{classroom}', [AdminClassroomController::class,
 
 Route::get('/admin/teacher', [AdminTeacherController::class, 'index'])->name('teacher.index');
 Route::post('/admin/teacher', [AdminTeacherController::class, 'store'])->name('teacher.store');
+Route::put('/admin/teacher/{teacher}', [AdminTeacherController::class, 'update'])->name('teacher.update');
 Route::delete('/admin/teacher/{teacher}', [AdminTeacherController::class, 'destroy'])->name('teacher.destroy');
 
 Route::get('/admin/subject', [AdminSubjectController::class, 'index'])->name('subject.index');
 Route::post('/admin/subject', [AdminSubjectController::class, 'store'])->name('subject.store');
+Route::put('/admin/subject/{subject}', [AdminSubjectController::class, 'update'])->name('subject.update');
 Route::delete('/admin/subject/{subject}', [AdminSubjectController::class, 'destroy'])->name('subject.destroy');

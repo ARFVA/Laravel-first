@@ -20,22 +20,35 @@ class AdminSubjectController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:100',
             'description' => 'nullable|string|max:255',
         ]);
 
-        Subject::create($request->only(['name', 'description']));
+        Subject::create($validated);
 
         return redirect()->back()->with('success', 'Subject berhasil ditambahkan!');
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:100',
+            'description' => 'nullable|string|max:255',
+        ]);
+
+        $subject = Subject::findOrFail($id);
+        $subject->update($validated);
+
+        return redirect()->back()->with('success', 'Subject berhasil diupdate!');
     }
 
     public function destroy(string $id)
     {
         $subject = Subject::with('teachers')->findOrFail($id);
-        $subject->teachers()->delete();
+        
         $subject->delete();
 
-        return redirect()->back()->with('success', 'Subject dan semua guru terkait berhasil dihapus!');
+        return redirect()->back()->with('success', 'Subject berhasil dihapus!');
     }
 }

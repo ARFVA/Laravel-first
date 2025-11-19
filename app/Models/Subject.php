@@ -10,8 +10,8 @@ class Subject extends Model
     /** @use HasFactory<\Database\Factories\SubjectFactory> */
     use HasFactory;
 
-    protected $fillable = ['name', 'description'];
     protected $table = "subjects";
+    protected $fillable = ['name', 'description'];
 
     public function teachers(){
         return $this->hasMany(Teacher::class, 'subject_id');

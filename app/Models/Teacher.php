@@ -9,7 +9,6 @@ class Teacher extends Model
 {
     use HasFactory;
 
-    // Eager load relasi tunggal 'subject'
     protected $with = ['subject'];
 
     protected $fillable = [
