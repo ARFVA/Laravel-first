@@ -8,13 +8,25 @@ use Illuminate\Http\Request;
 
 class AdminClassroomController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $classrooms = Classroom::with('students')->get();
+        $search = $request->input('search');
+
+        $classrooms = Classroom::with('students')
+            ->when($search, function ($query, $search) {
+                $query
+                    ->where('name', 'like', "%{$search}%")
+                    ->orWhereHas('students', function ($q) use ($search) {
+                        $q->where('name', 'like', "%{$search}%");
+                    });
+            })
+            ->latest()
+            ->paginate(2) 
+            ->withQueryString();
 
         return view('admin.classroom.admin-classroom', [
             'title' => 'Classroom',
-            'classrooms' => $classrooms
+            'classrooms' => $classrooms,
         ]);
     }
 
@@ -40,8 +52,5 @@ class AdminClassroomController extends Controller
         return redirect()->back()->with('success', 'Data berhasil diupdate!');
     }
 
-    public function destroy()
-    {
-
-    }
+    public function destroy() {}
 }

@@ -1,4 +1,4 @@
-<form action="{{ route('teacher.store') }}" method="POST" class="space-y-4">
+<form action="{{ route('admin.teachers.store') }}" method="POST" class="space-y-4">
     @csrf
     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Add Teacher</h3>
 
@@ -15,9 +15,12 @@
 
         <div>
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subject</label>
-            <select name="subject_id" class="w-full border rounded-lg p-2 dark:bg-gray-700 dark:text-white">
+            <select name="subject_id" required class="w-full border rounded-lg p-2 dark:bg-gray-700 dark:text-white">
+                <option value="">Select Subject</option>
                 @foreach ($subjects as $subject)
-                    <option value="{{ $subject->id }}">{{ $subject->name }}</option>
+                    @if(!$subject->teacher)
+                        <option value="{{ $subject->id }}">{{ $subject->name }}</option>
+                    @endif
                 @endforeach
             </select>
         </div>

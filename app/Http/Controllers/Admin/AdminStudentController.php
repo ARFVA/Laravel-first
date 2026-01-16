@@ -9,9 +9,25 @@ use Illuminate\Http\Request;
 
 class AdminStudentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $students = Student::paginate(12);
+        $search = $request->input('search');
+
+        $students = Student::query()
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%")
+                        ->orWhere('adress', 'like', "%{$search}%") 
+                        ->orWhereHas('classroom', function ($q_class) use ($search) {
+                            $q_class->where('name', 'like', "%{$search}%");
+                        });
+                });
+            })
+            ->latest()
+            ->paginate(12)
+            ->withQueryString();
+
         $classrooms = Classroom::all();
 
         return view('admin.student.admin-students', [
@@ -56,7 +72,6 @@ class AdminStudentController extends Controller
     public function destroy(Student $student)
     {
         $student->delete();
-
         return back()->with('success', 'Data berhasil dihapus!');
     }
 }

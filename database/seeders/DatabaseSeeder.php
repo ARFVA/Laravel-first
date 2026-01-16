@@ -9,6 +9,7 @@ use App\Models\Subject;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use GuzzleHttp\Promise\Create;
+use Hash;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,15 +19,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Guardian::factory(10)->create();
-        Classroom::factory(5)
-        ->hasStudents(5)
-        ->Create();
-        Subject::factory(5)->hasTeachers(1)->create();
-        
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        Guardian::factory(40)->create();
+        Classroom::factory(5)->hasStudents(10)->Create();
+        Subject::factory(40)->hasTeacher(1)->create();
+
+        User::create([
+            'name' => 'Admin Sekolah',
+            'email' => 'admin@gmail.com',
+            'password' => 'password',
+            'role' => 'admin',
         ]);
     }
 }

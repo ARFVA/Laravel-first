@@ -8,20 +8,34 @@ use Illuminate\Http\Request;
 
 class AdminSubjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $subjects = Subject::with('teachers')->get();
+        $search = $request->input('search');
+
+        $subjects = Subject::with('teacher')
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%")
+                        ->orWhereHas('teacher', function ($q_teacher) use ($search) {
+                            $q_teacher->where('name', 'like', "%{$search}%");
+                        });
+                });
+            })
+            ->latest()
+            ->paginate(12)
+            ->withQueryString();
 
         return view('admin.subject.admin-subject', [
             'title' => 'Subject',
-            'subjects' => $subjects
+            'subjects' => $subjects,
         ]);
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:100',
+            'name' => 'required|string|max:100|unique:subjects,name',
             'description' => 'nullable|string|max:255',
         ]);
 
@@ -33,7 +47,7 @@ class AdminSubjectController extends Controller
     public function update(Request $request, string $id)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:100',
+            'name' => 'required|string|max:100|unique:subjects,name,' . $id,
             'description' => 'nullable|string|max:255',
         ]);
 
@@ -41,10 +55,5 @@ class AdminSubjectController extends Controller
         $subject->update($validated);
 
         return redirect()->back()->with('success', 'Subject berhasil diupdate!');
-    }
-
-    public function destroy()
-    {
-        
     }
 }

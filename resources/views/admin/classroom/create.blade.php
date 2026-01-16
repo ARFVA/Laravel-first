@@ -1,4 +1,4 @@
-<form action="{{ route('classroom.store') }}" method="POST" class="space-y-4">
+<form action="{{ route('admin.classrooms.store') }}" method="POST" class="space-y-4">
     @csrf
     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Add Classroom</h3>
 

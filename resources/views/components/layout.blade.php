@@ -20,6 +20,9 @@
     </div>
   </main>
 </div>
+    @guest
+        <x-login-modal />
+    @endguest
     </h1>
   </body>
 </html>

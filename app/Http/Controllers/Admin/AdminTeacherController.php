@@ -9,15 +9,30 @@ use Illuminate\Http\Request;
 
 class AdminTeacherController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $teachers = Teacher::with('subject')->get();
-        $subjects = Subject::all();
+        $search = $request->input('search');
+
+        $teachers = Teacher::with('subject')
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%")
+                        ->orWhereHas('subject', function ($q_subject) use ($search) {
+                            $q_subject->where('name', 'like', "%{$search}%");
+                        });
+                });
+            })
+            ->latest()
+            ->paginate(12)
+            ->withQueryString();
+
+        $subjects = Subject::doesntHave('teacher')->get();
 
         return view('admin.teacher.admin-teacher', [
             'title' => 'Data Guru',
             'teachers' => $teachers,
-            'subjects' => $subjects,
+            'subjects' => $subjects, 
         ]);
     }
 
@@ -41,7 +56,6 @@ class AdminTeacherController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:100',
             'email' => 'required|email|max:100|unique:teachers,email,' . $id,
-            'subject_id' => 'required|exists:subjects,id',
             'phone' => 'required|string|max:20',
             'address' => 'required|string|max:255',
         ]);

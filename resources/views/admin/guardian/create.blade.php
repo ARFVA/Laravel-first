@@ -1,4 +1,4 @@
-<form action="{{ route('guardians.store') }}" method="POST" class="space-y-4">
+<form action="{{ route('admin.guardians.store') }}" method="POST">
     @csrf
 
     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
